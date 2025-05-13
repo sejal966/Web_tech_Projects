@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ID Card Generator - Dark Mode</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #1f2937;
+      color: #f9fafb;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    .container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .form-section {
+      background: #111827;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      width: 300px;
+    }
+    .form-section h2 {
+      margin-bottom: 1rem;
+    }
+    .form-section input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #374151;
+      background-color: #1f2937;
+      color: #f9fafb;
+      border-radius: 8px;
+    }
+    .form-section button {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .form-section button:hover {
+      background-color: #4338ca;
+    }
+    .id-card {
+      background: #111827;
+      width: 300px;
+      padding: 1rem;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+    }
+    .id-card img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      margin-bottom: 1rem;
+      border: 2px solid #4f46e5;
+      object-fit: cover;
+    }
+    .id-card h2 {
+      color: #4f46e5;
+      margin-bottom: 0.5rem;
+    }
+    .id-card h3 {
+      margin: 0.2rem 0;
+      color: #f9fafb;
+    }
+    .id-card span {
+      display: block;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>ABES Engineering College</h1>
+  <div class="container">
+    <div class="form-section">
+      <h2>Enter Student's Details</h2>
+      <input type="text" id="name" placeholder="Full Name" />
+      <input type="text" id="rollno" placeholder="Roll No" />
+      <input type="text" id="admission" placeholder="Admission Number" />
+      <input type="text" id="branch" placeholder="Branch" />
+      <input type="date" id="dob" placeholder="Date of Birth" />
+      <input type="text" id="bloodGroup" placeholder="Blood Group" />
+      <input type="text" id="hostel" placeholder="Hosteler / Day Scholar" />
+      <!-- <input type="text" id="designation" placeholder="Designation" /> -->
+      <input type="file" id="photo" accept="image/*" />
+      <button onclick="generateIDCard()">Generate</button>
+    </div>
+
+    <div class="id-card" id="idCard">
+      <h2>ABES Engineering College</h2>
+      <img id="profilePic" src="https://via.placeholder.com/150" alt="Profile" />
+      <h3 id="cardName">Your Name</h3>
+      <span id="cardRoll">Roll No: 000000</span>
+      <span id="cardAdmission">Admission No: 000000</span>
+      <span id="cardBranch">Branch: CSE</span>
+      <span id="cardDOB">DOB: --/--/----</span>
+      <span id="cardBlood">Blood Group: A+</span>
+      <span id="cardHostel">Hosteler/Day Scholar: --</span>
+      <!-- <span id="cardDesignation">Position</span> -->
+      <span id="cardValidity">Valid Till: 2027</span>
+    </div>
+  </div>
+
+  <script>
+    function generateIDCard() {
+      const name = document.getElementById("name").value;
+      const rollno = document.getElementById("rollno").value;
+      const admission = document.getElementById("admission").value;
+      const branch = document.getElementById("branch").value;
+      const dob = document.getElementById("dob").value;
+      const bloodGroup = document.getElementById("bloodGroup").value;
+      const hostel = document.getElementById("hostel").value;
+      // const designation = document.getElementById("designation").value;
+      const photo = document.getElementById("photo").files[0];
+
+      document.getElementById("cardName").textContent = name || "Your Name";
+      document.getElementById("cardRoll").textContent = rollno ? `Roll No: ${rollno}` : "Roll No: 000000";
+      document.getElementById("cardAdmission").textContent = admission ? `Admission No: ${admission}` : "Admission No: 000000";
+      document.getElementById("cardBranch").textContent = branch ? `Branch: ${branch}` : "Branch: CSE";
+      document.getElementById("cardDOB").textContent = dob ? `DOB: ${dob}` : "DOB: --/--/----";
+      document.getElementById("cardBlood").textContent = bloodGroup ? `Blood Group: ${bloodGroup}` : "Blood Group: A+";
+      document.getElementById("cardHostel").textContent = hostel ? `Hosteler/Day Scholar: ${hostel}` : "Hosteler/Day Scholar: --";
+      // document.getElementById("cardDesignation").textContent = designation || "Position";
+
+      const currentYear = new Date().getFullYear();
+      const validityYear = currentYear + 2;
+      document.getElementById("cardValidity").textContent = `Valid Till: ${validityYear}`;
+
+      if (photo) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById("profilePic").src = e.target.result;
+        };
+        reader.readAsDataURL(photo);
+      }
+    }
+  </script>
+</body>
+</html>
